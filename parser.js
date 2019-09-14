@@ -7,7 +7,7 @@ function parse_data(data, twoLetters) {
         .pipe(
             rxjs_op.filter(word => word.trim().length > 0),
             rxjs_op.map(word => word.toLowerCase().replace(/[.!?",;:]/g, '')),
-            rxjs_op.filter(word => word.startsWith(twoLetters)),
+            rxjs_op.filter(word => word.startsWith(twoLetters.toLowerCase())),
             rxjs_op.groupBy(word => word),
             rxjs_op.mergeMap(group =>
                 group.pipe(

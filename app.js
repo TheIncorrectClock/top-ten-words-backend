@@ -6,12 +6,14 @@ const app = express();
 const port = 8443;
 
 app.get('/top10wordsB/:twoLetters', (req, res) => {
-    console.log(req.params['twoLetters']);
-    parser.parse_data(loader.load_content('christmas_carol.txt'), req.params['twoLetters'])
-        .subscribe(body => {
-            console.log(body);
-            res.status(200).json(body);
-        });
+    if (req.params['twoLetters'].length !== 2) {
+        res.status(412).json({'error': 'path param should have length 2'});
+    } else {
+        parser.parse_data(loader.load_content('christmas_carol.txt'), req.params['twoLetters'])
+            .subscribe(body => {
+                res.status(200).json(body);
+            });
+    }
 });
 
 app.listen(port, () => {
